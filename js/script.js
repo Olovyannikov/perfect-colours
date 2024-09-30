@@ -1,9 +1,9 @@
-(function($) {
+(function ($) {
     "use strict";
 
     // Windows load
 
-    $(window).on("load", function() {
+    $(window).on("load", function () {
 
         // Site loader 
 
@@ -11,7 +11,6 @@
         $(".loader").delay(200).fadeOut("slow");
 
     });
-
 
     // Scroll to
 
@@ -21,21 +20,20 @@
     });
 
 
-
     // Site navigation setup
 
     var header = $('.header'),
         pos = header.offset(),
         blockTop = $('.block-top');
 
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         if ($(this).scrollTop() > pos.top + 500 && header.hasClass('default')) {
-            header.fadeOut('fast', function() {
+            header.fadeOut('fast', function () {
                 $(this).removeClass('default').addClass('switched-header').fadeIn(200);
                 blockTop.addClass('active');
             });
         } else if ($(this).scrollTop() <= pos.top + 500 && header.hasClass('switched-header')) {
-            header.fadeOut('fast', function() {
+            header.fadeOut('fast', function () {
                 $(this).removeClass('switched-header').addClass('default').fadeIn(100);
                 blockTop.removeClass('active');
             });
@@ -43,24 +41,21 @@
     });
 
 
-
-
     //Hero resize
 
 
     var mainHero = $(" .hero .main-slider .slides li");
+
     function mainHeroResize() {
         mainHero.css('height', $(window).height());
     }
 
-    $(function() {
-            mainHeroResize()
-        }),
-        $(window).resize(function() {
+    $(function () {
+        mainHeroResize()
+    }),
+        $(window).resize(function () {
             mainHeroResize()
         });
-
-
 
 
     // Slider
@@ -85,15 +80,13 @@
     });
 
 
-
-
     // Mobile menu
 
     var mobileBtn = $('.mobile-but');
     var nav = $('.main-nav ul');
     var navHeight = nav.height();
 
-    $(mobileBtn).on("click", function() {
+    $(mobileBtn).on("click", function () {
         $(".toggle-mobile-but").toggleClass("active");
         nav.slideToggle();
         $('.main-nav li a').addClass('mobile');
@@ -102,7 +95,7 @@
 
     });
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         var w = $(window).width();
         if (w > 320 && nav.is(':hidden')) {
             nav.removeAttr('style');
@@ -111,7 +104,7 @@
 
     });
 
-    $('.main-nav li a').on("click", function() {
+    $('.main-nav li a').on("click", function () {
         if ($(this).hasClass('mobile')) {
             nav.slideToggle();
             $(".toggle-mobile-but").toggleClass("active");
@@ -120,10 +113,9 @@
     });
 
 
-
     // Append images as css background
 
-    $('.background-img').each(function() {
+    $('.background-img').each(function () {
         var path = $(this).children('img').attr('src');
         $(this).css('background-image', 'url("' + path + '")').css('background-position', 'initial');
     });
@@ -131,11 +123,9 @@
 
     // Count down setup
 
-    $('.countdown').countdown('2018/6/20', function(event) {
+    $('.countdown').countdown('2018/6/20', function (event) {
         $(this).html(event.strftime('%D days %H:%M:%S'));
     });
-
-
 
 
     //Twitter setup
@@ -170,14 +160,13 @@
         });
         return listOfTweets;
     }
+
     twitterFetcher.fetch(config);
 
 
+    // Tabbed content
 
-
-    // Tabbed content 
-
-    $(".block-tabs li").on("click", function() {
+    $(".block-tabs li").on("click", function () {
         if (!$(this).hasClass("active")) {
             var tabNum = $(this).index();
             var nthChild = tabNum + 1;
@@ -194,7 +183,7 @@
 
     var playlist = $('.album');
     var a = audiojs.create(playlist, {
-        trackEnded: function() {
+        trackEnded: function () {
             var next = $('.playlist li.playing').next();
             if (!next.length) next = $('.playlist li').first();
             next.addClass('playing').siblings().removeClass('playing');
@@ -209,9 +198,7 @@
     audio.load(first);
 
 
-
-
-    $('.playlist li').on('click', function() {
+    $('.playlist li').on('click', function () {
         if ($(this).attr('class') == 'playing') {
             $(this).addClass('pause');
             audio.playPause();
@@ -227,12 +214,16 @@
     });
 
 
-    $('.toggle-lyrics').on('click', function() {
+    $('.toggle-lyrics').on('click', function () {
         $(this).closest('.playlist li').find('.block-lyrics').slideToggle();
         $(this).toggleClass('selected');
         return false;
     });
-
+    $('.download-track').on('click', function (e) {
+        e.stopPropagation();
+        e.download();
+        return false;
+    });
 
 
     //Popup elements
@@ -264,8 +255,6 @@
     });
 
 
-
-
     //Search form setup
 
     var btn = $('.main-nav li span.search-ico');
@@ -279,14 +268,14 @@
             speed: '300'
         },
 
-        init: function(config) {
+        init: function (config) {
 
             $.extend(this.config, config);
             btn.on('click', this.show);
 
         },
 
-        show: function() {
+        show: function () {
 
 
             var sf = searchForm,
@@ -301,13 +290,13 @@
             }
         },
 
-        close: function() {
+        close: function () {
 
             var $this = $(this);
 
             if ($this.find('span.search-close').length) return;
 
-            document.onkeydown = function(e) {
+            document.onkeydown = function (e) {
                 e = e || window.event;
                 if (e.keyCode == 27) {
 
@@ -317,7 +306,7 @@
 
             $('<span class=close-search></span>')
                 .prependTo($this)
-                .on('click', function() {
+                .on('click', function () {
                     $this[searchForm.config.effect](searchForm.config.effect.speed);
                 })
         }
